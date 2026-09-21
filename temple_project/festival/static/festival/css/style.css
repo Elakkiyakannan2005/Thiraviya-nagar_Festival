@@ -1,0 +1,889 @@
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f8f7f2;
+    color: #20251f;
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 20px 6%;
+
+    background: #ffffff;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.brand {
+    font-size: 22px;
+    font-weight: bold;
+    color: #253d29;
+}
+
+.navbar nav {
+    display: flex;
+    gap: 25px;
+}
+
+.navbar nav a {
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.navbar nav a:hover {
+    color: #718b32;
+}
+
+.menu-toggle {
+    display: none;
+
+    border: none;
+    background: transparent;
+
+    font-size: 25px;
+}
+
+
+/* =========================
+   HERO SECTION
+========================= */
+
+.hero {
+    position: relative;
+
+    min-height: 680px;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+
+    color: white;
+}
+
+.background-video {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    z-index: -2;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+
+    background: rgba(20, 30, 20, 0.70);
+
+    z-index: -1;
+}
+
+.hero-content {
+    width: min(1100px, 88%);
+
+    margin: auto;
+
+    padding: 100px 0;
+}
+
+.eyebrow {
+    font-size: 12px;
+    letter-spacing: 3px;
+
+    font-weight: bold;
+
+    color: #819d43;
+
+    margin-bottom: 25px;
+}
+
+.hero .eyebrow {
+    color: #d5e4b4;
+}
+
+.hero h1 {
+    font-size: clamp(42px, 7vw, 85px);
+
+    font-weight: 500;
+
+    line-height: 1.08;
+
+    margin-bottom: 25px;
+    
+    color:greenyellow;
+}
+
+.hero h1 span {
+    color: #d8f16b;
+}
+
+.hero-content > p:not(.eyebrow) {
+    max-width: 540px;
+
+    color: #e1e8db;
+
+    font-size: 17px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.actions {
+    display: flex;
+
+    gap: 15px;
+
+    flex-wrap: wrap;
+
+    margin-top: 35px;
+}
+
+.btn {
+    display: inline-block;
+
+    padding: 14px 25px;
+
+    border: 1px solid transparent;
+
+    border-radius: 4px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+.btn.primary {
+    background: #47744e;
+    color: white;
+}
+
+.btn.primary:hover {
+    background: #70df4b;
+    color:#202d21;
+    transform: translateY(-3px);
+}
+
+.btn.ghost {
+    background: transparent;
+
+    color: white;
+
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+.btn.ghost:hover {
+    background: white;
+    color: #253d29;
+}
+
+
+/* =========================
+   GENERAL SECTIONS
+========================= */
+
+.section {
+    padding: 100px 7%;
+}
+
+.section-title {
+    max-width: 850px;
+
+    margin-bottom: 55px;
+}
+
+.section-title h2 {
+    font-size: clamp(35px, 5vw, 65px);
+
+    line-height: 1.15;
+
+    font-weight: 600;
+}
+
+.section-title > p:not(.eyebrow) {
+    margin-top: 20px;
+
+    max-width: 650px;
+
+    color: #667064;
+}
+
+
+/* =========================
+   ABOUT SECTION
+========================= */
+
+/* .about {
+    background: #f8f7f2;
+}
+
+.about-grid {
+    display: grid;
+
+    grid-template-columns: 2fr 1fr 1fr;
+
+    gap: 35px;
+
+    align-items: start;
+}
+
+.about-grid > p {
+    font-size: 18px;
+
+    color: #596158;
+
+    line-height: 1.9;
+}
+
+.info-card {
+    padding: 25px;
+
+    background: white;
+
+    border: 1px solid #e4e7df;
+
+    border-radius: 8px;
+}
+
+.info-card span {
+    display: block;
+
+    font-size: 13px;
+
+    color: #8ba34c;
+
+    margin-bottom: 30px;
+}
+
+.info-card h3 {
+    font-size: 23px;
+
+    margin-bottom: 10px;
+}
+
+.info-card p {
+    font-size: 14px;
+
+    color: #687267;
+}
+ */
+
+/* =========================
+   FESTIVAL SECTION
+========================= */
+
+.festival {
+    background: #e8ecdf;
+}
+
+.section-title p{
+    font-size:xx-large;
+
+}
+.cards {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 25px;
+}
+
+.card {
+    padding: 35px;
+
+    background: white;
+
+    border-radius: 8px;
+
+    border: 1px solid #dfe5d7;
+
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+.icon {
+    font-size: 30px;
+
+    margin-bottom: 25px;
+}
+
+.card h3 {
+    font-size: 23px;
+
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-weight: bold;
+
+    color: #526d39;
+
+    margin-bottom: 15px;
+}
+
+.card small {
+    color: #70786b;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   SCHEDULE
+========================= */
+
+.schedule {
+    margin-top: 60px;
+
+    padding: 35px;
+
+    background: #253d29;
+
+    color: white;
+
+    border-radius: 8px;
+}
+
+.schedule h3 {
+    font-size: 25px;
+
+    margin-bottom: 25px;
+}
+
+.schedule div {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 25px;
+
+    padding: 18px 0;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.schedule div:last-child {
+    border-bottom: none;
+}
+
+.schedule b {
+    color: #d7edaa;
+}
+
+.schedule span {
+    color: #e0e7da;
+
+    text-align: right;
+}
+
+
+/* =========================
+   GALLERY
+========================= */
+
+.gallery {
+    background: #f8f7f2;
+}
+
+.gallery-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 25px;
+}
+
+.gallery-grid figure {
+    overflow: hidden;
+
+    background: white;
+
+    border-radius: 8px;
+}
+
+.gallery-grid img,
+.gallery-grid video {
+    display: block;
+
+    width: 100%;
+
+    height: 300px;
+
+    object-fit: cover;
+
+    background: #d9dfd0;
+}
+
+.gallery-grid img {
+    transition: 0.4s;
+}
+
+.gallery-grid figure:hover img {
+    transform: scale(1.04);
+}
+
+.gallery-grid figcaption {
+    padding: 18px;
+
+    font-size: 15px;
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   DONATION SECTION
+========================= */
+
+.donation {
+    background: #e8ecdf;
+}
+
+.donation .section-title {
+    max-width: 700px;
+}
+.donation .section-title .eyebrow{
+    font-size: 18px;
+    font-weight: bold;
+    color: #526d39;
+}
+
+.donation .section-title h2{
+    font-size: 40px;
+    font-weight: bold;
+    color: #253d29;
+}
+.donation .section-title p{
+    font-size: 18px;
+    color: #526d39;
+    line-height: 1.8;
+}
+.donation .section-title img{
+    position:absolute;
+    height: 300px;
+    right: 3rem;
+    top: 8rem;
+}
+
+.donation-form {
+    max-width: 800px;
+
+    padding: 40px;
+
+    background: white;
+
+    border-radius: 10px;
+
+    border: 1px solid #dce4d4;
+}
+
+.form-row {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
+}
+
+.donation-form label,
+.contact-form label {
+    display: block;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    margin-bottom: 20px;
+}
+
+.donation-form input,
+.donation-form textarea,
+.contact-form input,
+.contact-form textarea {
+    display: block;
+
+    width: 100%;
+
+    margin-top: 8px;
+
+    padding: 14px;
+
+    border: 1px solid #d5ddd0;
+
+    border-radius: 5px;
+
+    outline: none;
+
+    background: #fbfcf9;
+
+    color: #20251f;
+}
+
+.donation-form textarea,
+.contact-form textarea {
+    min-height: 120px;
+
+    resize: vertical;
+}
+
+.donation-form input:focus,
+.donation-form textarea:focus,
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: #7b994c;
+}
+
+.amounts {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin: 10px 0 25px;
+}
+
+.amounts button {
+    padding: 10px 20px;
+
+    border: 1px solid #b9c8a8;
+
+    border-radius: 5px;
+
+    background: white;
+
+    color: #38542e;
+
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+.amounts button:hover,
+.amounts button.active {
+    background: #253d29;
+
+    color: white;
+
+    border-color: #253d29;
+}
+
+.form-message {
+    margin-top: 18px;
+
+    font-size: 14px;
+
+    color: #526d39;
+}
+
+
+/* =========================
+   CONTACT SECTION
+========================= */
+
+.contact {
+    background: #f8f7f2;
+}
+
+.contact-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 70px;
+
+    align-items: start;
+}
+
+.contact-grid > div > p:first-child {
+    color: #687267;
+
+    font-size: 17px;
+
+    line-height: 1.8;
+
+    margin-bottom: 35px;
+}
+
+.contact-line {
+    margin-bottom: 18px;
+
+    font-weight: bold;
+
+    color: #3d5039;
+}
+
+.contact-form {
+    padding: 35px;
+
+    background: white;
+
+    border: 1px solid #e4e7df;
+
+    border-radius: 8px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    margin-bottom: 18px;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    padding: 35px 7%;
+
+    background: #202d21;
+
+    color: #dbe4d5;
+
+    text-align: center;
+
+    font-size: 14px;
+}
+
+footer p + p {
+    margin-top: 8px;
+
+    color: #9fac96;
+}
+
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+
+@media (max-width: 900px) {
+
+    .navbar {
+        padding: 18px 5%;
+    }
+
+    .navbar nav {
+        gap: 15px;
+    }
+
+    .section {
+        padding: 75px 5%;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .about-grid > p {
+        grid-column: 1 / -1;
+    }
+
+    .cards {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .contact-grid {
+        gap: 35px;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    /* NAVBAR */
+
+    .navbar {
+        flex-wrap: wrap;
+
+        gap: 15px;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .navbar nav {
+        display: none;
+
+        width: 100%;
+
+        flex-direction: column;
+
+        gap: 0;
+    }
+
+    .navbar nav.active {
+        display: flex;
+    }
+
+    .navbar nav a {
+        padding: 12px 0;
+
+        border-bottom: 1px solid #eeeeee;
+    }
+
+
+    /* HERO */
+
+    .hero {
+        min-height: 600px;
+    }
+
+    .hero-content {
+        width: 90%;
+
+        padding: 80px 0;
+    }
+
+    .hero h1 {
+        font-size: 45px;
+    }
+
+    .hero-content > p:not(.eyebrow) {
+        font-size: 15px;
+    }
+
+
+    /* SECTIONS */
+
+    .section {
+        padding: 65px 5%;
+    }
+
+    .section-title h2 {
+        font-size: 38px;
+    }
+
+
+    /* ABOUT */
+
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-grid > p {
+        grid-column: auto;
+    }
+
+
+    /* CARDS */
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+
+    /* GALLERY */
+
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-grid img,
+    .gallery-grid video {
+        height: 260px;
+    }
+
+
+    /* SCHEDULE */
+
+    .schedule {
+        padding: 25px;
+    }
+
+    .schedule div {
+        flex-direction: column;
+
+        gap: 5px;
+    }
+
+    .schedule span {
+        text-align: left;
+    }
+
+
+    /* FORMS */
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .donation-form,
+    .contact-form {
+        padding: 25px;
+    }
+
+
+    /* CONTACT */
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .actions {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+}

@@ -1,0 +1,210 @@
+/* =========================================================
+   ANIMATIONS LAYER
+   Loaded after style.css. Only adds motion / entrance effects
+   on top of the existing design -- no layout/colour changes.
+========================================================= */
+
+/* ---- Hero: staggered reveal on load ---- */
+
+.reveal-item {
+    opacity: 0;
+    transform: translateY(18px);
+    animation: reveal-up 0.8s ease forwards;
+    animation-delay: var(--reveal-delay, 0s);
+}
+
+@keyframes reveal-up {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---- Hero: floating petals / diyas ---- */
+
+.floating-decor {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.floating-decor .petal {
+    position: absolute;
+    bottom: -10%;
+    font-size: 26px;
+    opacity: 0.55;
+    animation: float-up linear infinite;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
+}
+
+.petal-1 { left: 8%;  animation-duration: 14s; animation-delay: 0s; }
+.petal-2 { left: 24%; animation-duration: 18s; animation-delay: 2s; font-size: 22px; }
+.petal-3 { left: 52%; animation-duration: 16s; animation-delay: 4s; }
+.petal-4 { left: 71%; animation-duration: 20s; animation-delay: 1s; font-size: 30px; }
+.petal-5 { left: 88%; animation-duration: 15s; animation-delay: 3s; font-size: 20px; }
+
+@keyframes float-up {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    90% {
+        opacity: 0.4;
+    }
+    100% {
+        transform: translateY(-120vh) rotate(180deg);
+        opacity: 0;
+    }
+}
+
+/* ---- Pulse on the primary CTA button ---- */
+
+.btn.pulse {
+    animation: pulse-glow 2.6s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(71, 116, 78, 0.55);
+    }
+    50% {
+        box-shadow: 0 0 0 12px rgba(71, 116, 78, 0);
+    }
+}
+
+/* ---- Scroll-reveal for cards / gallery / schedule / form ---- */
+
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    transition-delay: calc(var(--stagger, 0) * 0.12s);
+}
+
+.animate-on-scroll.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ---- Navbar link underline animation ---- */
+
+.navbar nav a {
+    position: relative;
+}
+
+.navbar nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 2px;
+    background: #718b32;
+    transition: width 0.3s ease;
+}
+
+.navbar nav a:hover::after {
+    width: 100%;
+}
+
+/* ---- Gallery figure hover lift ---- */
+
+.gallery-grid figure {
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.gallery-grid figure:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-grid figcaption {
+    transform: translateY(4px);
+    opacity: 0.85;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.gallery-grid figure:hover figcaption {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* ---- Donation stats counters ---- */
+
+.donation-stats {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.stat-box {
+    background: white;
+    border: 1px solid #dce4d4;
+    border-radius: 8px;
+    padding: 18px 26px;
+    min-width: 160px;
+}
+
+.stat-number {
+    display: block;
+    font-size: 32px;
+    font-weight: bold;
+    color: #253d29;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: #667064;
+}
+
+/* ---- Amount button select animation ---- */
+
+.amounts button {
+    transform: scale(1);
+    transition: transform 0.2s ease, background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.amounts button.active {
+    transform: scale(1.06);
+}
+
+/* ---- Receipt download link (appears after a successful donation) ---- */
+
+.receipt-link {
+    margin-top: 14px;
+    animation: flash-in 0.5s ease;
+}
+
+.form-message.success-flash {
+    animation: flash-in 0.5s ease;
+}
+
+@keyframes flash-in {
+    0% {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .reveal-item,
+    .floating-decor .petal,
+    .btn.pulse,
+    .animate-on-scroll {
+        animation: none !important;
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}

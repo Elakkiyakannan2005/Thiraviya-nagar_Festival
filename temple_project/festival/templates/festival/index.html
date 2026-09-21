@@ -1,0 +1,359 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Thiraviya Nagar | Temple Festival</title>
+
+    <link rel="stylesheet" href="{% static 'festival/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'festival/css/animations.css' %}">
+
+    {% csrf_token %}
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+
+        <a href="#home" class="brand">
+             THIRAVIYA NAGAR
+        </a>
+
+        <button class="menu-toggle" aria-label="Toggle menu">
+            ☰
+        </button>
+
+        <nav id="navLinks">
+
+            <a href="#home">Home</a>
+            <a href="#festival">Festival</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#donation">Donation</a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- HOME SECTION -->
+    <section id="home" class="hero">
+
+        <video autoplay muted loop playsinline
+            class="background-video">
+
+            <source src="{% static 'festival/media/native.mp4' %}" type="video/mp4">
+
+        </video>
+
+        <div class="overlay"></div>
+
+        <div class="floating-decor" aria-hidden="true">
+            <span class="petal petal-1">🌼</span>
+            <span class="petal petal-2">🪔</span>
+            <span class="petal petal-3">🌸</span>
+            <span class="petal petal-4">🌼</span>
+            <span class="petal petal-5">🪔</span>
+        </div>
+
+        <div class="hero-content">
+
+            <p class="eyebrow reveal-item" style="--reveal-delay:0.05s">
+                THIRAVIYA NAGAR
+            </p>
+
+            <h1 class="reveal-item" style="--reveal-delay:0.2s">
+                Welcome to all!
+            </h1>
+
+            <p class="reveal-item" style="--reveal-delay:0.35s">
+                நம் ஊரின் பெருமை, நம் கோவிலின் பாரம்பரியம்,
+                நம் திருவிழாவின் மகிழ்ச்சி —
+                அனைத்தையும் ஒன்றாக கொண்டாடுவோம்!
+            </p>
+
+            <div class="actions reveal-item" style="--reveal-delay:0.5s">
+
+                <a class="btn primary pulse" href="#donation">
+                    Support the Festival
+                </a>
+
+                <a class="btn ghost" href="#gallery">
+                    Explore Gallery ↗
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FESTIVAL SECTION -->
+    <section id="festival" class="section festival">
+
+        <div class="section-title">
+
+            <p class="eyebrow">
+                திருவிழா விவரங்கள்
+            </p>
+
+        </div>
+
+        <div class="cards">
+
+            <article class="card animate-on-scroll" style="--stagger:0">
+
+                <div class="icon">📅</div>
+
+                <h3>திருவிழா தேதி</h3>
+
+                <p>{{ info.festival_date_text|default:"விரைவில் அறிவிக்கப்படும்" }}</p>
+
+                <small>
+                    {% if info.announcement %}
+                        {{ info.announcement }}
+                    {% else %}
+                        திருவிழா தேதி மற்றும் நிகழ்ச்சி விவரங்கள் ஏற்பாட்டாளர்களால் விரைவில் அறிவிக்கப்படும்.
+                    {% endif %}
+                </small>
+
+            </article>
+
+
+            <article class="card animate-on-scroll" style="--stagger:1">
+
+                <div class="icon">🪔</div>
+
+                <h3>சிறப்பு நிகழ்ச்சிகள்</h3>
+
+                <p>
+                    பூஜை • கலாச்சார நிகழ்ச்சிகள்
+                </p>
+
+                <small>
+                    குடும்பத்தினருடனும் நண்பர்களுடனும் இணைந்து திருவிழாவைக் கொண்டாடுங்கள்.
+                </small>
+
+            </article>
+
+
+            <article class="card animate-on-scroll" style="--stagger:2">
+
+                <div class="icon">🙏</div>
+
+                <h3>சமூக சேவை</h3>
+
+                <p>
+                    நன்கொடை மற்றும் ஆதரவு
+                </p>
+
+                <small>
+                    உங்கள் பங்களிப்பின் மூலம் திருவிழாவை சிறப்பாகவும் அர்த்தமுள்ளதாகவும் கொண்டாட உதவுங்கள்.
+                </small>
+
+            </article>
+
+        </div>
+
+
+        <!-- SCHEDULE -->
+
+        <div class="schedule animate-on-scroll">
+
+            <h3>திருவிழா நிகழ்ச்சி அட்டவணை</h3>
+
+            <div>
+                <b>காலை</b>
+                <span>
+                    {% for item in schedule_by_slot.morning %}{{ item.description }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                </span>
+            </div>
+
+            <div>
+                <b>மதியம்</b>
+                <span>
+                    {% for item in schedule_by_slot.afternoon %}{{ item.description }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                </span>
+            </div>
+
+            <div>
+                <b>மாலை</b>
+                <span>
+                    {% for item in schedule_by_slot.evening %}{{ item.description }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                </span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- GALLERY SECTION -->
+    <section id="gallery" class="section gallery">
+
+        <div class="section-title">
+
+            <p class="eyebrow">
+                MEMORIES
+            </p>
+
+            <h2>
+                Moments from our temple
+            </h2>
+
+        </div>
+
+        <div class="gallery-grid">
+
+            {% for item in gallery_items %}
+            <figure class="animate-on-scroll" style="--stagger:{{ forloop.counter0 }}">
+
+                {% if item.media_type == "image" %}
+                    <img src="{{ item.media_file.url }}" alt="{{ item.title }}">
+                {% else %}
+                    <video controls muted>
+                        <source src="{{ item.media_file.url }}" type="video/mp4">
+                    </video>
+                {% endif %}
+
+                <figcaption>
+                    {{ item.caption|default:item.title }}
+                </figcaption>
+
+            </figure>
+            {% empty %}
+            <p>Gallery items will appear here once added from the admin panel.</p>
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <!-- DONATION SECTION -->
+    <section id="donation" class="section donation">
+
+        <div class="section-title">
+
+            <p class="eyebrow">
+                நன்கொடை வழங்கி திருவிழாவில் பங்கேற்கவும்
+            </p>
+
+            <h2>
+               கோவில் திருவிழாவிற்கு ஆதரவளியுங்கள்
+            </h2>
+
+            <p>
+             உங்கள் ஆதரவு நமது சமூகத்தின் திருவிழா கொண்டாட்டங்கள் மற்றும் சேவை நிகழ்ச்சிகளை சிறப்பாக நடத்த உதவுகிறது.
+
+             உங்கள் பங்களிப்பு நமது கோவில் திருவிழாவின் மகிழ்ச்சியையும் ஒற்றுமையையும் அதிகரிக்க உதவும்.
+            </p>
+
+            <img src="{% static 'festival/media/gods.png' %}" alt="Deities">
+
+            <div class="donation-stats">
+
+                <div class="stat-box animate-on-scroll">
+                    <span class="stat-number" data-count-to="{{ total_raised|floatformat:'0' }}">0</span>
+                    <span class="stat-label">₹ Raised so far</span>
+                </div>
+
+                <div class="stat-box animate-on-scroll" style="--stagger:1">
+                    <span class="stat-number" data-count-to="{{ donor_count }}">0</span>
+                    <span class="stat-label">Donors</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <form id="donationForm"
+            class="donation-form animate-on-scroll"
+            method="post"
+            action="{% url 'festival:donate' %}">
+
+            {% csrf_token %}
+
+            <!-- NAME AND MOBILE -->
+
+            <div class="form-row">
+
+                <label>
+                    Full Name
+                    {{ donation_form.name }}
+                </label>
+
+                <label>
+                    Mobile Number
+                    {{ donation_form.mobile }}
+                </label>
+
+            </div>
+
+
+            <!-- ADDRESS -->
+
+            <label>
+                Address
+                {{ donation_form.address }}
+            </label>
+
+
+            <!-- AMOUNT BUTTONS -->
+
+            <div class="amounts">
+
+                <button type="button" data-amount="500">₹500</button>
+                <button type="button" data-amount="1000">₹1,000</button>
+                <button type="button" data-amount="2000">₹2,000</button>
+
+            </div>
+
+
+            <!-- AMOUNT INPUT -->
+
+            <label>
+                Donation Amount (₹)
+                {{ donation_form.amount }}
+            </label>
+
+
+            <button class="btn primary" type="submit">
+                Continue Demo Donation →
+            </button>
+
+
+            <p id="formMessage" class="form-message"></p>
+
+        </form>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            © 2026 {{ info.festival_name }}
+        </p>
+
+        <p>
+            Built with ❤️ for our community
+        </p>
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="{% static 'festival/js/style.js' %}"></script>
+
+</body>
+
+</html>

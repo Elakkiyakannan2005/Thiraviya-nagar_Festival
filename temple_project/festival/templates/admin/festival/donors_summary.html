@@ -1,0 +1,40 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<div id="content-main">
+
+    <p>
+        <a href="../">&larr; Back to Donations</a>
+    </p>
+
+    <table id="donors-summary" style="width:100%; border-collapse: collapse;">
+        <thead>
+            <tr style="text-align:left; border-bottom: 2px solid #ccc;">
+                <th style="padding:8px;">Name</th>
+                <th style="padding:8px;">Mobile</th>
+                <th style="padding:8px;">Total Donated</th>
+                <th style="padding:8px;">No. of Donations</th>
+                <th style="padding:8px;">Last Donation</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for donor in donors %}
+            <tr style="border-bottom: 1px solid #eee;">
+                <td style="padding:8px;">{{ donor.name }}</td>
+                <td style="padding:8px;">{{ donor.mobile }}</td>
+                <td style="padding:8px;">&#8377;{{ donor.total_donated|floatformat:2 }}</td>
+                <td style="padding:8px;">{{ donor.donation_count }}</td>
+                <td style="padding:8px;">{{ donor.last_donation|date:"d M Y, h:i A" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" style="padding:16px; text-align:center;">
+                    No donations yet.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}
