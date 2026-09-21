@@ -5,6 +5,8 @@ Django settings for the Thiraviya Nagar Temple Festival project.
 from pathlib import Path
 import os
 
+import dj_database_url
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # -------------------------------------------------------------------
@@ -18,7 +20,22 @@ SECRET_KEY = os.environ.get(
 
 DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split(",")
+ALLOWED_HOSTS = [
+    h.strip() for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "*").split(",") if h.strip()
+]
+
+# Render sets this automatically for every web service (e.g.
+# "thiraviya-nagar.onrender.com") — add it so ALLOWED_HOSTS/CSRF work
+# without you having to hardcode the Render URL anywhere.
+RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+CSRF_TRUSTED_ORIGINS = [
+    o.strip() for o in os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",") if o.strip()
+]
+if RENDER_EXTERNAL_HOSTNAME:
+    CSRF_TRUSTED_ORIGINS.append(f"https://{RENDER_EXTERNAL_HOSTNAME}")
 
 # -------------------------------------------------------------------
 # APPLICATIONS
@@ -36,6 +53,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -68,14 +86,23 @@ ASGI_APPLICATION = "temple_project.asgi.application"
 # -------------------------------------------------------------------
 # DATABASE
 # -------------------------------------------------------------------
-# SQLite is enough for a temple/community site. Swap to Postgres in
-# production by changing this dict (or using an env-based DATABASE_URL).
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+# SQLite locally by default. If a DATABASE_URL env var is set (Render
+# provides one automatically when you attach a PostgreSQL database),
+# that is used instead — this keeps donations/gallery data persistent
+# in production, since Render's free web service disk is not permanent.
+DATABASE_URL = os.environ.get("DATABASE_URL")
+
+if DATABASE_URL:
+    DATABASES = {
+        "default": dj_database_url.config(default=DATABASE_URL, conn_max_age=600)
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 # -------------------------------------------------------------------
 # PASSWORD VALIDATION
@@ -102,7 +129,29 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "festival" / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+# Whitenoise serves static files directly from the Django process on
+# Render (no separate static-file host needed). Compressed (not the
+# stricter "Manifest" variant) so a build never fails just because a
+# template references an asset path.
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+}
+
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# -------------------------------------------------------------------
+# PRODUCTION SECURITY (only kicks in when DEBUG=False, e.g. on Render)
+# -------------------------------------------------------------------
+if not DEBUG:
+    SECURE_SSL_REDIRECT = os.environ.get("DJANGO_SECURE_SSL_REDIRECT", "True") == "True"
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True

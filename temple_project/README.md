@@ -132,6 +132,55 @@ Every donation now gets a **PDF receipt/bill**, generated on the fly (nothing st
 All animations respect `prefers-reduced-motion` and are pure CSS/JS — no external libraries
 or CDNs required.
 
+## Deploying to Render (free live link)
+
+This project is ready to deploy as-is. Push your latest code to GitHub first (you've
+already done this), then:
+
+1. **Create a free PostgreSQL database on Render** (skip this only if you're fine with
+   data resetting on every redeploy):
+   - Render dashboard → **New +** → **PostgreSQL** → give it a name → **Create Database**
+   - Wait for it to finish provisioning, then copy its **Internal Database URL**.
+
+2. **Create the web service:**
+   - Render dashboard → **New +** → **Web Service** → connect your GitHub repo
+     (`Thiraviya-nagar_Festival`)
+   - **Runtime:** Python 3
+   - **Build Command:** `./build.sh`
+   - **Start Command:** `gunicorn temple_project.wsgi:application`
+
+3. **Add environment variables** (Web Service → **Environment**):
+
+   | Key | Value |
+   |---|---|
+   | `DJANGO_SECRET_KEY` | any long random string (don't reuse the one in settings.py) |
+   | `DJANGO_DEBUG` | `False` |
+   | `DATABASE_URL` | paste the Internal Database URL from step 1 (skip if not using Postgres) |
+
+   `DJANGO_ALLOWED_HOSTS` and CSRF don't need manual setup — the app already reads
+   Render's own `RENDER_EXTERNAL_HOSTNAME` variable automatically.
+
+4. Click **Create Web Service**. Render will run `build.sh` (installs dependencies,
+   collects static files, runs migrations) and then start the app. First deploy takes
+   a few minutes — watch the **Logs** tab.
+
+5. Once it's live, open the `.onrender.com` link Render gives you, then visit
+   `/admin/` and create a superuser **from the Render Shell tab**:
+   ```bash
+   python manage.py createsuperuser
+   ```
+   (Render's free plan puts services to sleep after inactivity — the first request
+   after a while takes ~30-60s to wake up, that's normal.)
+
+**About file storage on Render's free tier:** the web service's own disk is *not*
+persistent — anything written to it (including a SQLite database, or new gallery
+photos/videos uploaded through `/admin/`) is wiped on every redeploy or restart. Using
+the Postgres database from step 1 solves this for donations/schedule/festival-info
+data. Gallery **media uploads** would still be lost on redeploy under this setup — fine
+for the seeded demo gallery (it's re-copied on every `migrate`), but if you plan to
+regularly add new photos/videos from the admin, add a Render persistent disk (paid,
+cheap) or move media storage to something like Cloudinary/S3 (`django-storages`).
+
 ## Notes
 
 - Media files (uploaded gallery photos/videos, including the seeded ones) are served from
